@@ -13,7 +13,7 @@ import {
 } from "./TextBox/constants";
 import HairLossImage from "./img/hair_loss.png";
 import EDImage from "./img/ed.png";
-import ContentWrapper from "./ContentWrapper/ContentWraper";
+import ContentWrapper from "./Body/ContentWraper";
 import QuizContainer from "./Quiz/QuizContainer";
 
 function App() {

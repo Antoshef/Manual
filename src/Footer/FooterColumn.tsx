@@ -9,12 +9,14 @@ type Props = {
 const FooterColumn: FC<Props> = ({ title, items }) => {
   return (
     <div className="footer-column">
-      <h3 className="footer-title">{title}</h3>
+      <h3 className="footer-column-title">{title}</h3>
       <nav>
         <ul>
           {items.map(({ text, ref }, index) => (
             <li key={text + index}>
-              <a target="_blank" href={ref}>{text}</a>
+              <a target="_blank" href={ref}>
+                {text}
+              </a>
             </li>
           ))}
         </ul>

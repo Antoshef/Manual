@@ -2,26 +2,29 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { questionActions } from "../Actions/questionActions";
 import LogoImage from "../img/Symbol.png";
 import { IQuizForm } from "../models/models";
-import { manualUrl } from "../TextBox/constants";
-import { Circles } from  'react-loader-spinner'
+import { BACK_BUTTON, manualUrl } from "../TextBox/constants";
+import { Circles } from "react-loader-spinner";
 import DisplayQuestions from "./DisplayQuestions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Store/store";
 import { updateQuestions } from "../Actions/quizAction";
+import Button from "../Buttons/Button";
 
 type Props = {
   onClose: () => void;
 };
 
 const QuizContainer: FC<Props> = ({ onClose }) => {
-  const quizQuestions = useSelector((state: RootState) => state.questionsReducer.questions)
+  const quizQuestions = useSelector(
+    (state: RootState) => state.questionsReducer.questions
+  );
   const [form, setForm] = useState<IQuizForm[]>([]);
   const [step, setStep] = useState<number>(0);
   const [isRejected, setIsRejected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const { getQuestions } = questionActions();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     !Boolean(quizQuestions.length) && updateData();
@@ -31,7 +34,7 @@ const QuizContainer: FC<Props> = ({ onClose }) => {
     try {
       setIsLoading(true);
       const { questions } = await getQuestions();
-      dispatch(updateQuestions(questions))
+      dispatch(updateQuestions(questions));
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -50,7 +53,7 @@ const QuizContainer: FC<Props> = ({ onClose }) => {
         setIsRejected(true);
         setStep(quizQuestions.length + 1);
 
-      // check if answer exist in form, update it's values
+        // check if answer exist in form, update it's values
       } else if (form[step]) {
         const refactoredForm = [...form];
         refactoredForm[step] = {
@@ -80,8 +83,8 @@ const QuizContainer: FC<Props> = ({ onClose }) => {
   }, []);
 
   return (
-    <section className="quiz-wrapper">
-      <div className="quiz-header">
+    <section className="quiz">
+      <div className="quiz-title">
         <div>
           <a target="_blank" href={manualUrl}>
             <img alt="manual logo" src={LogoImage} />
@@ -91,20 +94,23 @@ const QuizContainer: FC<Props> = ({ onClose }) => {
           {!error && step < quizQuestions.length && (
             <span>{`${step + 1} of ${quizQuestions.length}`}</span>
           )}
-          <button className="close-button" onClick={onClose}>Back</button>
+          <Button
+            title={BACK_BUTTON}
+            className="close-button"
+            onClick={onClose}
+          />
         </div>
       </div>
       {isLoading && <Circles wrapperClass="loader" />}
-      {!isLoading &&
-        !error &&
-        Boolean(quizQuestions.length) &&
+      {!isLoading && !error && Boolean(quizQuestions.length) && (
         <DisplayQuestions
           isRejected={isRejected}
           quizQuestions={quizQuestions}
           revertHandler={revertAnswer}
           step={step}
           submitHandler={submitHandler}
-        />}
+        />
+      )}
       {!isLoading && error && <p>There was an error while fetching data.</p>}
     </section>
   );

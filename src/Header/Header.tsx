@@ -8,29 +8,38 @@ import { manualUrl } from "../TextBox/constants";
 
 type Props = {
   openQuizHandler: () => void;
-} & DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>
+} & DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 
 const Header: FC<Props> = ({ openQuizHandler, ...props }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const maxPhoneWidthPX = 765;
-  
-  window.addEventListener("resize", function() {
-    setWindowWidth(window.innerWidth)
-  })
+
+  window.addEventListener("resize", function () {
+    setWindowWidth(window.innerWidth);
+  });
 
   return (
-    <header {...props} className="header-wrapper">
-      <div className="logo-wrapper">
+    <header {...props} className="banner">
+      <div className="logo">
         <a target="_blank" href={manualUrl}>
           <img alt="manual logo" src={LogoImage} />
         </a>
       </div>
       <HeaderTextBox openQuizHandler={openQuizHandler} />
-      <div className="header-image-wrapper">
-        {windowWidth <= maxPhoneWidthPX
-          ? <img className="header-person" alt="grateful person" src={transparentImg} />
-          : <img className="header-person" alt="grateful person" src={backgroundImg} />
-        }
+      <div className="banner-image">
+        {windowWidth <= maxPhoneWidthPX ? (
+          <img
+            className="banner-person"
+            alt="grateful person"
+            src={transparentImg}
+          />
+        ) : (
+          <img
+            className="banner-person"
+            alt="grateful person"
+            src={backgroundImg}
+          />
+        )}
       </div>
     </header>
   );

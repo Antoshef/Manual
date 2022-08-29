@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, FC } from "react";
-import QuizButton from "../Quiz/QuizButton";
+import Button from "../Buttons/Button";
 import {
   HEADER_MAIN_TEXT_ONE,
   HEADER_MAIN_TEXT_TWO,
@@ -13,14 +13,14 @@ type Props = {
 
 const HeaderTextBox: FC<Props> = ({ openQuizHandler, ...props }) => {
   return (
-    <div {...props} className="header-box-wrapper">
-      <h1 className="header-main-text">
+    <div {...props} className="banner-box">
+      <h1 className="banner-box-title">
         <span>{HEADER_MAIN_TEXT_ONE}</span>
         <br />
         <span>{HEADER_MAIN_TEXT_TWO}</span>
       </h1>
-      <p className="paragraph">{HEADER_SUBHEADER}</p>
-      <QuizButton id="quiz_button" title={TAKE_THE_QUIZ} onClick={openQuizHandler} />
+      <p className="banner-box-text">{HEADER_SUBHEADER}</p>
+      <Button id="quiz_button" title={TAKE_THE_QUIZ} onClick={openQuizHandler} />
     </div>
   );
 };

@@ -8,10 +8,10 @@ type Props = {
 
 const BodyTextBox: FC<Props> = ({ title, header, text }) => {
   return (
-    <div className="body-text-box">
-      <span className="text-box-title">{title}</span>
-      <h3 className="text-box-header">{header}</h3>
-      <p className="text-box-text">{text}</p>
+    <div className="body-article-box">
+      <span className="body-article-box-heading">{title}</span>
+      <h3 className="body-article-box-title">{header}</h3>
+      <p className="body-article-box-text">{text}</p>
     </div>
   );
 };

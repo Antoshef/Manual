@@ -1,12 +1,7 @@
 import { DOMAttributes, FC } from "react";
 
 const Section: FC<DOMAttributes<any>> = ({ ...props }) => {
+  return <section className="section">{props.children}</section>;
+};
 
-  return (
-    <section className="section">
-      {props.children}
-    </section>
-  )
-}
-
-export default Section
+export default Section;

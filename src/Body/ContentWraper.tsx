@@ -25,27 +25,26 @@ const ContentWrapper: FC<Props> = ({
   title,
 }) => {
   return (
-    <Container>
-      <Section>
-        <div className='column-wrapper'>
-          {header && <h2 className='body-header'>{header}</h2>}
-          <div className={!reverse ? 'row-wrapper' : 'row-wrapper row-reverse'}>
-            <a className="image-ref" href={manualUrl}>
-              <div className={'image-wrapper'}>
+    <Section>
+        <Container>
+        <div className="body">
+          {header && <h2 className="body-title">{header}</h2>}
+          <div className={!reverse ? "body-article" : "body-article body-article-reverse"}>
+            <a className="body-article-image-ref" href={manualUrl}>
+              <div className={"body-article-image"}>
                 <img alt={backgroundDigit} src={imageSrc} />
               </div>
             </a>
-            <BackgroundDigit className={reverse ? "reverse-digit" : ""} text={backgroundDigit} />
-            <BodyTextBox
-              title={title}
-              header={subheader}
-              text={text}
+            <BackgroundDigit
+              className={reverse ? "body-article-background-reverse" : ""}
+              text={backgroundDigit}
             />
+            <BodyTextBox title={title} header={subheader} text={text} />
           </div>
         </div>
-      </Section>
-    </Container>
-  )
+      </Container>
+    </Section>
+  );
 };
 
 export default ContentWrapper;

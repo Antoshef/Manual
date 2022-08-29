@@ -19,8 +19,7 @@ export type FooterNavType = {
   ref: string;
 }
 
-export interface IQuizForm {
+export type IQuizForm =  {
   question: string;
   answer: string | boolean;
-  isRejection: boolean;
-}
+} & Pick<IOption, "isRejection">

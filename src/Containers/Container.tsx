@@ -1,12 +1,7 @@
 import { DOMAttributes, FC } from "react";
 
 const Container: FC<DOMAttributes<any>> = ({ ...props }) => {
+  return <article className="container">{props.children}</article>;
+};
 
-  return (
-    <section className="container">
-      {props.children}
-    </section>
-  )
-}
-
-export default Container
+export default Container;

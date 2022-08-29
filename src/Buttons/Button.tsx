@@ -9,12 +9,12 @@ type Props = {
   HTMLButtonElement
 >;
 
-const QuizButton: FC<Props> = ({ onClick, title, ...props }) => {
+const Button: FC<Props> = ({ onClick, title, ...props }) => {
   return (
-    <button {...props} className="quiz-button" onClick={onClick}>
+    <button {...props} className={`${props.className} button`} onClick={onClick}>
       {title}
     </button>
   );
 };
 
-export default memo(QuizButton);
+export default memo(Button);
