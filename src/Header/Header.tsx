@@ -11,7 +11,7 @@ type Props = {
 } & DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>
 
 const Header: FC<Props> = ({ openQuizHandler, ...props }) => {
-  const [windowWidth, setWindowWidth] = useState(0)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const maxPhoneWidthPX = 765;
   
   window.addEventListener("resize", function() {

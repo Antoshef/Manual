@@ -1,35 +1,37 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { questionActions } from "../Actions/questionActions";
-import AnswerButton from "./AnswerButton";
 import LogoImage from "../img/Symbol.png";
-import { IQuestion, IQuizForm } from "../models/models";
-import { GO_BACK, manualUrl, REJECT_TEXT } from "../TextBox/constants";
-import QuizResult from "./QuizResult";
+import { IQuizForm } from "../models/models";
+import { manualUrl } from "../TextBox/constants";
 import { Circles } from  'react-loader-spinner'
-import QuizButton from "./QuizButton";
+import DisplayQuestions from "./DisplayQuestions";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../Store/store";
+import { updateQuestions } from "../Actions/quizAction";
 
 type Props = {
   onClose: () => void;
 };
 
 const QuizContainer: FC<Props> = ({ onClose }) => {
-  const [quizQuestions, setQuizQuestions] = useState<IQuestion[]>([]);
+  const quizQuestions = useSelector((state: RootState) => state.questionsReducer.questions)
   const [form, setForm] = useState<IQuizForm[]>([]);
   const [step, setStep] = useState<number>(0);
   const [isRejected, setIsRejected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const { getQuestions } = questionActions();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    updateQuestions();
+    !Boolean(quizQuestions.length) && updateData();
   }, []);
 
-  const updateQuestions = async () => {
+  const updateData = async () => {
     try {
       setIsLoading(true);
       const { questions } = await getQuestions();
-      setQuizQuestions(questions);
+      dispatch(updateQuestions(questions))
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -40,16 +42,19 @@ const QuizContainer: FC<Props> = ({ onClose }) => {
 
   const submitHandler = useCallback(
     (value: string | boolean, isRejection: boolean) => {
-      const refactoredValue =
+      // if value is of type boolean, transform to: "Yes" / "No"
+      const transformedValue =
         typeof value === "boolean" ? (value === true ? "Yes" : "No") : value;
 
       if (isRejection) {
         setIsRejected(true);
         setStep(quizQuestions.length + 1);
+
+      // check if answer exist in form, update it's values
       } else if (form[step]) {
         const refactoredForm = [...form];
         refactoredForm[step] = {
-          answer: refactoredValue,
+          answer: transformedValue,
           question: quizQuestions[step].question,
           isRejection,
         };
@@ -59,7 +64,7 @@ const QuizContainer: FC<Props> = ({ onClose }) => {
         setForm((prevForm) => [
           ...prevForm,
           {
-            answer: refactoredValue,
+            answer: transformedValue,
             question: quizQuestions[step].question,
             isRejection,
           },
@@ -73,50 +78,6 @@ const QuizContainer: FC<Props> = ({ onClose }) => {
   const revertAnswer = useCallback(() => {
     setStep((prevState) => prevState - 1);
   }, []);
-
-  const DisplayQuestion = (): JSX.Element => {
-    for (let i = step; i < quizQuestions.length; ) {
-      const { options, question } = quizQuestions[i];
-      const [firstOption, secondOption] = options;
-
-      return (
-        <div className="quiz-question-wrapper">
-          <h4 className="quiz-question">{question}</h4>
-          {firstOption && (
-            <AnswerButton
-              value={String(firstOption.value)}
-              title={firstOption.display}
-              onClick={() =>
-                submitHandler(firstOption.value, firstOption.isRejection)
-              }
-            />
-          )}
-          {secondOption && (
-            <AnswerButton
-              value={String(secondOption.value)}
-              title={secondOption.display}
-              onClick={() =>
-                submitHandler(secondOption.value, secondOption.isRejection)
-              }
-            />
-          )}
-          {step > 0 && <QuizButton title={GO_BACK} onClick={revertAnswer} />}
-        </div>
-      );
-    }
-
-    if (isRejected) {
-      return (
-        <div className="quiz-result">
-          <p>{REJECT_TEXT}</p>
-        </div>
-      );
-    } else {
-      return <QuizResult />;
-    }
-  };
-
-  console.log(form, "FORM");
 
   return (
     <section className="quiz-wrapper">
@@ -137,7 +98,13 @@ const QuizContainer: FC<Props> = ({ onClose }) => {
       {!isLoading &&
         !error &&
         Boolean(quizQuestions.length) &&
-        DisplayQuestion()}
+        <DisplayQuestions
+          isRejected={isRejected}
+          quizQuestions={quizQuestions}
+          revertHandler={revertAnswer}
+          step={step}
+          submitHandler={submitHandler}
+        />}
       {!isLoading && error && <p>There was an error while fetching data.</p>}
     </section>
   );

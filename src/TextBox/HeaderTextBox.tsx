@@ -20,7 +20,7 @@ const HeaderTextBox: FC<Props> = ({ openQuizHandler, ...props }) => {
         <span>{HEADER_MAIN_TEXT_TWO}</span>
       </h1>
       <p className="paragraph">{HEADER_SUBHEADER}</p>
-      <QuizButton title={TAKE_THE_QUIZ} onClick={openQuizHandler} />
+      <QuizButton id="quiz_button" title={TAKE_THE_QUIZ} onClick={openQuizHandler} />
     </div>
   );
 };

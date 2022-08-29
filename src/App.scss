@@ -135,11 +135,15 @@ span {
   right: 0;
   bottom: 0;
   object-fit: cover;
-  object-position: right bottom;
+  object-position: right;
   min-width: 100%;
   max-width: 100%;
   min-height: 100%;
   max-height: 100%;
+
+  @media screen and (min-width: 1650px) {
+    object-fit: contain;
+  }
 
   @media screen and (max-width: $laptop-max-query) {
     right: -120px;
