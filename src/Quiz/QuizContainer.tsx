@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { questionActions } from "../Actions/questionActions";
 import LogoImage from "../img/Symbol.png";
 import { IQuizForm } from "../models/models";
-import { BACK_BUTTON, manualUrl } from "../TextBox/constants";
+import { BACK_BUTTON, ERROR_TEXT, manualUrl } from "../TextBox/constants";
 import { Circles } from "react-loader-spinner";
 import DisplayQuestions from "./DisplayQuestions";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,7 +53,7 @@ const QuizContainer: FC<Props> = ({ onClose }) => {
         setIsRejected(true);
         setStep(quizQuestions.length + 1);
 
-        // check if answer exist in form, update it's values
+        // check if answer exist in the form and update it's values
       } else if (form[step]) {
         const refactoredForm = [...form];
         refactoredForm[step] = {
@@ -111,7 +111,7 @@ const QuizContainer: FC<Props> = ({ onClose }) => {
           submitHandler={submitHandler}
         />
       )}
-      {!isLoading && error && <p>There was an error while fetching data.</p>}
+      {!isLoading && error && <p>{ERROR_TEXT}</p>}
     </section>
   );
 };

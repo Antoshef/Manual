@@ -55,3 +55,4 @@ export const QUIZ_RESULT =
 export const REJECT_TEXT =
   "Unfortunately, we are unable to prescribe this medication for you. This is because finasteride can alter the PSA levels, which maybe used to monitor for cancer. You should discuss this further with your GP or specialist if you would still like this medication.";
 export const BACK_BUTTON = "Back"
+export const ERROR_TEXT = "There was an error while fetching data."

@@ -79,7 +79,7 @@ p {
   overflow: hidden;
 }
 
-/* Header styles **/
+/* Banner styles **/
 .banner {
   background-color: $green;
   height: 750px;
@@ -484,18 +484,17 @@ p {
   max-width: 60%;
 }
 
-/* Images **/
+/* Reusable **/
+.loader {
+  margin-top: 30%;
+}
+
 .logo {
   position: absolute;
   top: 31px;
   z-index: 2;
   left: $header-left-spacing;
   cursor: pointer;
-}
-
-/* Reusable **/
-.loader {
-  margin-top: 30%;
 }
 
 .button {

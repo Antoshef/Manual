@@ -8,7 +8,7 @@ describe("test quiz result", () => {
     cy.get("#first-answer").click();
     cy.get("#second-answer").click();
     cy.get("#second-answer").click();
-    cy.get(".quiz-button").should("be.visible");
+    cy.get(".button").should("be.visible");
     cy.get("button.close-button").click();
     cy.get("#quiz_button").should("be.visible");
   });
